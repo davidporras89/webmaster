@@ -10,31 +10,30 @@ app.controller("MiController",["$scope",function($scope) {
   // Abre la conexión
   socket.addEventListener('open', function (event) {
       socket.send('Hola Servidor!');
-      console.log(socket.readyState);
-
   });
 
   // Escucha por mensajes
   socket.addEventListener('message', function (event) {
       console.log('Mensaje del servidor', event.data);
-
   });
 
-  socket.addEventListener('CLOSED	', function (event) {
-      alert("Cerrado");
-
+  socket.addEventListener('close', function (event) {
+      alert("Servidor Cerrado");
   });
 
 
   $scope.enviar=function(){
-    socket.send('Hola Servidor!');
+    if(socket.readyState===1){
+      socket.send('Hola Servidor!');
+    }else{
+      if(socket.readyState===3){
+        alert("Servidor Cerrado d");
+      }
+    }
   }
 
   $scope.cerrar=function(){
     socket.close();
-    console.log(socket.readyState);
-
-
   }
 
 

@@ -2,7 +2,10 @@ var app=angular.module("app",[]);
 
 
 app.controller("MiController",["$scope",function($scope) {
-  const socket = new WebSocket('wss://echo.websocket.org');
+
+
+
+  const socket = new WebSocket("wss://echo.websocket.org");
 
   // Abre la conexión
   socket.addEventListener('open', function (event) {
@@ -18,12 +21,20 @@ app.controller("MiController",["$scope",function($scope) {
   });
 
   socket.addEventListener('CLOSED	', function (event) {
-      console.log('cerrado');
+      alert("Cerrado");
 
   });
 
+
+  $scope.enviar=function(){
+    socket.send('Hola Servidor!');
+  }
+
   $scope.cerrar=function(){
-      socket.onclose;
+    socket.close();
+    console.log(socket.readyState);
+
+
   }
 
 

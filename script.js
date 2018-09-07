@@ -3,7 +3,10 @@ var app=angular.module("app",[]);
 
 app.controller("MiController",["$scope",function($scope) {
 
-
+ $scope.msg = {
+    nombre: "",
+    apellido: "",
+  };
 
   const socket = new WebSocket("wss://echo.websocket.org");
 
@@ -24,12 +27,17 @@ app.controller("MiController",["$scope",function($scope) {
 
   $scope.enviar=function(){
     if(socket.readyState===1){
-      socket.send('Hola Servidor!');
+      socket.send(JSON.stringify($scope.msg));
     }else{
       if(socket.readyState===3){
-        alert("Servidor Cerrado d");
+        alert("Servidor Cerrado");
       }
     }
+    $scope.msg = {
+       nombre: "",
+       apellido: "",
+     };
+
   }
 
   $scope.cerrar=function(){
